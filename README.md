@@ -93,24 +93,24 @@ V‑index TRNG injects **physically grounded** entropy — real acoustic noise �
 ## 🧪 Reproduce & Test Randomness (optional)
 Generate a batch of keys → test with external tools.
 
-**Save 1000 keys (one per line), then run:**
+Save 1000 keys (one per line), then run:
 
-# Example on macOS/Linux if you have 'ent' installed
+Example on macOS/Linux if you have 'ent' installed
 ent generated_keys.txt
 
-# Or use dieharder / NIST STS on the produced bitstreams
-# (convert chars → bits as needed before running suites)
+Or use dieharder / NIST STS on the produced bitstreams
+(convert chars → bits as needed before running suites)
  
 
- 
+ ---
 
-📚 Publications & References
+## 📚 Publications & References
 
 V‑index Preprint : https://doi.org/10.5281/zenodo.18147084
 
 
 
-🤝 Contributing
+## 🤝 Contributing
 
 Contributions are welcome! Please read CONTRIBUTING.md and follow the issue/PR templates.
 By contributing you agree your code is licensed under GPL‑3.0.
@@ -121,14 +121,14 @@ Security Policy: SECURITY.md
 
  
 
-🧾 License & Commercial Use
+## 🧾 License & Commercial Use
 
 GPL‑3.0 — see LICENSE.
 For commercial licensing, partnerships, or research collaboration: kisnorbert87@gmail.com
 
  
 
-🙋 FAQ
+## 🙋 FAQ
 
 Q: Will it work without HTTPS?
 A: Browsers require a secure context for microphone access (HTTPS or  localhost  during development).
@@ -144,7 +144,7 @@ A: No system is absolutely unbreakable. This project adds a physical layer to st
 
  
 
-🧑‍🔬 How to Cite
+## 🧑‍🔬 How to Cite
 
 If you reference this project in academic work, please cite the preprint and the repository:
 
@@ -153,6 +153,6 @@ GitHub: https://github.com/kisnorbert87/V-index-Quantum-Resistant-Physical-TRNG
 
  
 
-❤️ Acknowledgments
+## ❤️ Acknowledgments
 
 Thanks to the open‑source community and browser teams behind Web Audio API and Web Crypto. Special thanks to early testers for feedback on V‑index behavior and UI.
