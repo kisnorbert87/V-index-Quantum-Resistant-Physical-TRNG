@@ -43,7 +43,7 @@ Hybrid Architecture: Keys are not just the result of a software algorithm, they 
 
 Output: Keys are 24 characters long, selected from a 70-character alphabet. This ensures the output fully utilizes the 256-bit security strength of the underlying hash.
 
-Quantum Resistant Approach: The massive number of variations (94/64) far exceeds the brute-force capabilities of current and foreseeable computing power.
+Quantum Resistant Approach: The massive number of variations far exceeds the brute-force capabilities of current and foreseeable computing power.
 
 Zero Data Transfer: All processing happens locally in the client’s browser. No audio data or generated keys ever leave your device, ensuring total privacy.
 
