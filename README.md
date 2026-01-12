@@ -4,135 +4,160 @@
 
 
 # V-index Quantum Resistant Physical TRNG
+**Security powered by physics.**  
+The first open‑source, browser‑based True Random Number Generator (TRNG) that uses real‑world acoustic entropy to create quantum‑resistant keys — **no hardware required**.
 
-The first open source project that integrates acoustically validated entropy measured using the V-Index into modern browsers’ CSPRNG engines, creating a physically grounded, quantum resistant layer accessible to everyone. V-index PTRNG brings QKD level physical randomness and key quality to everyone's pocket, without the need for expensive hardware.
+!License: GPL-3.0
+!Live Demo
+!DOI
+!Made with JavaScript
 
-https://kisnorbert87.github.io/V-index-Quantum-Resistant-Physical-TRNG/
+---
 
-"For commercial use, please contact the author. kisnorbert87@gmail.com"
+## 🔍 TL;DR
+- **Quantum‑resistant** randomness for encryption keys  
+- **Physical entropy** harvested from your **microphone** (acoustically validated)  
+- **V‑index metric** acts as an *Entropy Gate* (rejects weak/artificial noise)  
+- **Zero data transfer**: runs entirely in your browser  
+- **Open‑source** (GPL‑3.0). For commercial use: **kisnorbert87@gmail.com**
 
+**Live demo:** https://kisnorbert87.github.io/V-index-Quantum-Resistant-Physical-TRNG/
 
-V-index Quantum Resistant Physical TRNG
+---
 
-This is an innovative, web based True Random Number Generator (TRNG) that uses environmental entropy (physical noise) to generate unbreakable encryption keys. The project is based on the V-index, which measures the system’s information density and stability. It is the first open‑source project that integrates acoustically validated entropy, measured by the V‑Index, into modern browser CSPRNG engines, creating a physically grounded, quantum‑resistant layer accessible to everyone.
+## 🚀 Quick Start
+1. Open the **Live Demo** (must be a secure context: HTTPS or `localhost`).
+2. Click **INITIALIZE SYSTEM** and allow microphone access.
+3. Create physical noise (paper crumpling, whispering, air movement).
+4. When **V‑index > 1.5**, the **HARVEST KEY** button unlocks.
+5. Click to generate your **24‑character** key.
 
-V-index
-Preprint: https://doi.org/10.5281/zenodo.18147084
+> **Privacy:** No audio or keys leave your device. Everything runs locally in the browser.
 
-The V-index is a physical metric describing the relationship between information (I), energy (a), and entropy (AS).
+---
 
-The program analyzes the analog signal coming through the microphone in real time and computes its V-index.
-V < 1.5: Low entropy (silence or monotonous noise). For security reasons, the system shuts down the generator.
-V > 1.5: This state represents the highest level of natural balance and complexity, ideal for quantum‑resistant keys.
+## 🧠 Why V‑index (and why physics)?
+Most “random” numbers behind passwords and encryption are math‑based simulations (PRNG/CSPRNG).  
+**Future quantum computers** may break assumptions behind common math‑based cryptosystems.  
+V‑index TRNG injects **physically grounded** entropy — real acoustic noise — and **validates** it *before* cryptographic mixing.
 
-Why Quantum‑Resistant?
-Most modern cryptography is based on mathematical algorithms that future quantum computers (e.g., using Shor’s algorithm) will be able to break.
-In contrast, the V-index Quantum Resistant Physical TRNG uses physical entropy.
-No pattern: The key is based on the chaotic movement of air molecules and hardware thermal noise.
+- **Acoustic entropy:** thermal noise + chaotic air movement  
+- **V‑index metric:** real‑time measure of information density & stability  
+- **Entropy Gate:** if the environment is too quiet or artificial, **generation is blocked**
 
-Unrecoverable: Since the source is not an equation but a one time physical event, there is no mathematical model that could reconstruct the key afterward.
-Entropy Gate: The system only allows key extraction if the V-index confirms the presence of external physical interaction (noise), thereby excluding weak, software-based randomness.
+---
 
-The generator does not rely on a single source of randomness, instead it weaves three distinct layers together to produce the final key:
+## 🔐 Key Features
+- **Acoustic Entropy (Web Audio API):** 32‑bit float PCM sampling across 128 bands
+- **Real‑time V‑index validation:** rejects silence/monotony (**V < 1.5**)  
+- **Hybrid mixing:** physical samples + metadata → **CSPRNG (crypto.getRandomValues)** → **SHA‑256 feedback buffer**
+- **Health tests:** Repetition Count Test (RCT) & Adaptive Proportion Test (APT)
+- **Output:** 24 characters, 70‑char alphabet, designed to target ~256‑bit strength
+- **Zero data transfer:** no recordings, no telemetry
+- **Open‑source:** GPL‑3.0 (contact for commercial licensing)
 
-Physical Entropy (Microphone): Utilizing the Web Audio API, the system captures ambient acoustic noise. The instantaneous fluctuations across 128 different frequency bands provide a "chaotic core" that is inherently unpredictable.
+---
 
-V-Index Algorithm: A custom mathematical model that analyzes the spectral distribution, weighted center (I), average amplitude (a), and deviation (AS) of the incoming audio. This module acts as the "Entropy Gate" if the environment is too silent or monotonic, the system locks to prevent the generation of weak keys.
+## 🏛 Architecture (high‑level)
+ 
 
-Cryptographic Mixing: Physical samples (2048 samples per hash) and V-Index metadata are cryptographically mixed with the browser's native CSPRNG (crypto.getRandomValues). The result is processed through an SHA-256 feedback buffer.
+┌─────────────┐     analog          ┌─────────────────┐        ┌──────────────────────┐ │ Environment │ ──> microphone ──>  │  Web Audio API  │  → →   │  V-index (Entropy    │ │  (noise)    │                     │  (PCM frames)   │        │  Gate, V>1.5 check)  │ └─────────────┘                     └─────────────────┘        └────────┬─────────────┘ │ allow/deny ▼ ┌───────────────────────────┐ │  Cryptographic Mixing     │ │  - crypto.getRandomValues │ │  - SHA-256 feedback buf   │ └───────────┬───────────────┘ ▼ ┌─────────────────────────┐ │  24-char Key (70 chars) │ └─────────────────────────┘
 
-Hybrid Architecture: Keys are not just the result of a software algorithm, they incorporate the unpredictable nature of the physical world.
+ 
 
-Output: Keys are 24 characters long, selected from a 70-character alphabet. This ensures the output fully utilizes the 256-bit security strength of the underlying hash.
+---
 
-Quantum Resistant Approach: The massive number of variations far exceeds the brute-force capabilities of current and foreseeable computing power.
+## 🧪 Security & Compliance
+- **NIST SP 800‑90B**: physical, non‑deterministic entropy source (+ health tests)  
+- **AIS 31 (PTG.2)**: physical source with internal fault/misuse detection (V‑index)  
+- **FIPS 140‑2 principles**: continuous self‑testing; refuse output on low entropy  
+- **ISO/IEC 18031**: output whitening via XOR‑based extraction + cryptographic mixing
 
-Zero Data Transfer: All processing happens locally in the client’s browser. No audio data or generated keys ever leave your device, ensuring total privacy.
+> ⚠️ **Note:** Software‑only implementations run inside general‑purpose operating systems.  
+> We design for **best‑effort quantum‑resistance** and **strong practical security**, but **no software can guarantee absolute security** in the presence of compromised hosts, malicious audio injection, or OS‑level signal processing.
 
+---
 
-Usage
+## 📏 Output & Entropy Notes
+- **Key length:** 24 chars (70‑char alphabet)  
+- **Target strength:** ~256 bits (accounting for hashing/mixing)  
+- **Design goal:** exceed brute‑force feasibility by orders of magnitude  
+- **Quantum angle:** even with Grover’s algorithm, the effective security remains extremely high at this size class
 
-Start the application in an HTTPS‑based environment (e.g., GitHub Pages).
+> _Cryptographic caution:_ strength claims depend on the absence of exploitable implementation bugs and the effectiveness of entropy validation under real‑world conditions.
 
-Click the INITIALIZE SYSTEM button.
+---
 
-Create physical noise (paper crumpling, whispering, air movement, anything).
+## 🧰 Tech Stack
+- **Language:** HTML5, CSS3, **JavaScript** (Web Audio API)
+- **Crypto:** Browser **CSPRNG** (`crypto.getRandomValues`), **SHA‑256**
+- **Visualization:** real‑time spectrum analyzer & particle viz
 
-Once the V-index reaches the secure range, the HARVEST KEY button becomes active.
+---
 
-Click the button to generate the 24‑character unique key.
+## 🧪 Reproduce & Test Randomness (optional)
+Generate a batch of keys → test with external tools.
 
-
-Technical Details
-
-Language: HTML5, CSS3, Pure JavaScript (Web Audio API)
-
-Quantum Resistance: Physical entropy extraction (Entropy Harvesting)
-
-Visualization: Real time spectrum analyzer and particle simulation
-
-Hash Algorithm: SHA-256
-
-Entropy Source: 32-bit Float PCM Audio Data
-
-Health Validation: Integrated Repetition Count Test and Adaptive Proportion Test to filter out low entropy states.
-
-
-Compliance and Security Standards
-
-The V-index Quantum Resistant Physical TRNG follows the international cybersecurity principles and standards below during the key generation process:
-
-1. NIST SP 800‑90B (Entropy Sources for RNGs)
-The program complies with NIST requirements that the random number generator must originate from a non‑deterministic physical source (Non‑Deterministic Random Bit Generator).
-Noise Source: Atmospheric and quantum thermal noise via the Web Audio API.
-V‑Index Validation: Functions as a “Health Test,” immediately shutting down generation if the entropy level drops below the critical threshold.
-
-2. AIS 31 (Class PTG.2)
-According to the German BSI standard, the system can be categorized as PTG.2. This means the randomness originates from a physical process, and the system includes an internal mechanism (the V-index) that detects statistical faults or external manipulation (e.g., if someone tries to “train” the generator with a pure sine wave).
-
-3. FIPS 140‑2 (Security Requirements for Cryptographic Modules)
-Although not dedicated hardware, the software implements continuous self‑testing as required by FIPS standards:
-Continuous RNG Test: Before each “harvest,” the V‑index analyzes the current block. If the input data is repetitive or static (V < 1.5), the system refuses to release the key.
-
-4. Quantum‑Resistant Cryptography (Post‑Quantum Readiness)
-Since key generation does not depend on mathematical algorithms (e.g., RSA or ECC), the system is immune to Grover‑algorithm‑based brute‑force attacks by quantum computers, assuming the generated key length is sufficient (256‑bit equivalent).
-
-5. ISO/IEC 18031:2011
-The standard requires whitening of noise sources. The V-index Quantum Resistant Physical TRNG performs this via XOR‑based bit extraction, where the physical sampling (rawData) is combined with the dynamic V-index value to ensure uniform distribution in the output key.
-
-
-Randomness Verification (Statistical Testing)
-To ensure the quality of keys generated by V‑Entropy, the output data must undergo industry‑standard statistical tests. The generated keys are examined according to the following principles:
-1. Dieharder and NIST STS Tests
-The following NIST Statistical Test Suite parameters can be applied to the generated bitstreams:
-
-Frequency (Monobit) Test: Checks whether the ratio of 0s to 1s is close to 50–50%.
-Runs Test: Verifies that there are no excessively long, uniform bit sequences.
-Spectral Test: Confirms that no repeating patterns (periodicity) appear in the key.
-
-2. Entropy Density Analysis (Shannon Entropy)
-Parallel to V-index measurement, the Shannon entropy (H) of the output keys approaches the theoretical maximum. For a 24‑character key where each character carries ~6 bits of information, the target is:
-H = log₂(n)
-where n is the number of possible characters.
-The V-index > 1.5 requirement guarantees that output density does not fall below the critical threshold.
-
-3. How You Can Test It Yourself
-To verify generated keys, we recommend using the following command line tool (Linux/macOS):
-
-(Save 1000 generated keys to a file, then run the ent tool)
-
+**Save 1000 keys (one per line), then run:**
+```bash
+# Example on macOS/Linux if you have 'ent' installed
 ent generated_keys.txt
 
-The ent program displays information content, chi‑square distribution, and arithmetic mean, proving the authenticity of the physical source.
+# Or use dieharder / NIST STS on the produced bitstreams
+# (convert chars → bits as needed before running suites)
+ 
 
-Brute Force Resistance
-​Each 24-character key provides ~256 bits of entropy. 
+ 
 
-​Mathematical Impossibility: 2^{256} is larger than the number of atoms in the universe. Even with all the world's computing power, it would take trillions of years to guess a single key.
+📚 Publications & References
 
-​The V-index Edge: Brute force relies on patterns. The V-index (V > 1.5) ensures the source is pure physical chaos, leaving no patterns or seeds to reverse-engineer.
-
-​Quantum Safe: Even with Grover’s algorithm, the remaining 128-bit security level remains unbreakable by any theoretical future technology.
+V‑index Preprint : https://doi.org/10.5281/zenodo.18147084
 
 
-​Security is guaranteed by physics, not just algorithms.
+
+🤝 Contributing
+
+Contributions are welcome! Please read CONTRIBUTING.md and follow the issue/PR templates.
+By contributing you agree your code is licensed under GPL‑3.0.
+
+Code of Conduct: CODE_OF_CONDUCT.md
+
+Security Policy: SECURITY.md
+
+ 
+
+🧾 License & Commercial Use
+
+GPL‑3.0 — see LICENSE.
+For commercial licensing, partnerships, or research collaboration: kisnorbert87@gmail.com
+
+ 
+
+🙋 FAQ
+
+Q: Will it work without HTTPS?
+A: Browsers require a secure context for microphone access (HTTPS or  localhost  during development).
+
+Q: Can I use it offline?
+A: Yes. Once the page is loaded, processing is local. No data is sent anywhere.
+
+Q: What if my room is very quiet?
+A: If V < 1.5, generation is blocked. Create local noise (paper, whisper, rustle) to raise entropy.
+
+Q: Is this “unbreakable”?
+A: No system is absolutely unbreakable. This project adds a physical layer to standard cryptography, designed for strong practical and quantum‑resistant security.
+
+ 
+
+🧑‍🔬 How to Cite
+
+If you reference this project in academic work, please cite the preprint and the repository:
+
+Norbert Kis, V-index Quantum Resistant Physical TRNG.  DOI: 10.5281/zenodo.18147084
+GitHub: https://github.com/kisnorbert87/V-index-Quantum-Resistant-Physical-TRNG
+
+ 
+
+❤️ Acknowledgments
+
+Thanks to the open‑source community and browser teams behind Web Audio API and Web Crypto. Special thanks to early testers for feedback on V‑index behavior and UI.
