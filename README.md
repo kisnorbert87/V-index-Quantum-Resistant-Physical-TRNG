@@ -138,6 +138,6 @@ Brute Force Resistance
 
 ​Quantum Safe: Even with Grover’s algorithm, the remaining 128-bit security level remains unbreakable by any theoretical future technology.
 
-----------------------------------------------------------------------------------------------------------------------------------
+-------------------------------------------------------------------------------------------------
 
 ​Security is guaranteed by physics, not just algorithms.
