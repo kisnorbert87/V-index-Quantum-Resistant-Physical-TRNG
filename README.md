@@ -73,9 +73,6 @@ V‑index TRNG injects **physically grounded** entropy — real acoustic noise �
 - **FIPS 140‑2 principles**: continuous self‑testing; refuse output on low entropy  
 - **ISO/IEC 18031**: output whitening via XOR‑based extraction + cryptographic mixing
 
-> ⚠️ **Note:** Software‑only implementations run inside general‑purpose operating systems.  
-> We design for **best‑effort quantum‑resistance** and **strong practical security**, but **no software can guarantee absolute security** in the presence of compromised hosts, malicious audio injection, or OS‑level signal processing.
-
 ---
 
 ## 📏 Output & Entropy Notes
@@ -83,8 +80,6 @@ V‑index TRNG injects **physically grounded** entropy — real acoustic noise �
 - **Target strength:** ~256 bits (accounting for hashing/mixing)  
 - **Design goal:** exceed brute‑force feasibility by orders of magnitude  
 - **Quantum angle:** even with Grover’s algorithm, the effective security remains extremely high at this size class
-
-> _Cryptographic caution:_ strength claims depend on the absence of exploitable implementation bugs and the effectiveness of entropy validation under real‑world conditions.
 
 ---
 
@@ -99,7 +94,7 @@ V‑index TRNG injects **physically grounded** entropy — real acoustic noise �
 Generate a batch of keys → test with external tools.
 
 **Save 1000 keys (one per line), then run:**
-```bash
+
 # Example on macOS/Linux if you have 'ent' installed
 ent generated_keys.txt
 
